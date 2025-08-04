@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud - Premium Music Player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff2d55">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-cloud"></i>
+            <span>Cloud</span>
+        </div>
+        <div class="header-actions">
+            <button class="search-toggle" id="searchToggle">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        <div class="search-container" id="searchContainer">
+            <input type="text" class="search-input" id="searchInput" placeholder="Search songs...">
+            <button class="search-close" id="searchClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <nav class="sidebar" id="sidebar">
+            <ul>
+                <li class="active" data-section="all-songs">
+                    <i class="fas fa-music"></i>
+                    <span>All Songs</span>
+                </li>
+                <li data-section="playlists">
+                    <i class="fas fa-list"></i>
+                    <span>Playlists</span>
+                </li>
+                <li data-section="liked-songs">
+                    <i class="fas fa-heart"></i>
+                    <span>Liked Songs</span>
+                </li>
+                <li data-section="recently-played">
+                    <i class="fas fa-history"></i>
+                    <span>Recently Played</span>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            <div class="section active" id="all-songs">
+                <h2 class="section-title">
+                    <i class="fas fa-music"></i>
+                    <span>All Songs</span>
+                </h2>
+                <div class="songs-grid" id="songsGrid"></div>
+            </div>
+
+            <div class="section" id="playlists">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i>
+                    <span>Your Playlists</span>
+                </h2>
+                <div class="playlists-container" id="playlistsContainer"></div>
+                <button class="add-playlist" id="addPlaylistBtn">
+                    <i class="fas fa-plus"></i> Create New Playlist
+                </button>
+            </div>
+
+            <div class="section" id="liked-songs">
+                <h2 class="section-title">
+                    <i class="fas fa-heart"></i>
+                    <span>Liked Songs</span>
+                </h2>
+                <div class="songs-grid" id="likedSongsGrid"></div>
+            </div>
+
+            <div class="section" id="recently-played">
+                <h2 class="section-title">
+                    <i class="fas fa-history"></i>
+                    <span>Recently Played</span>
+                </h2>
+                <div class="songs-grid" id="recentSongsGrid"></div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-music"></i>
+                <h3>No Songs Found</h3>
+                <p>Try a different search term</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="player" id="player">
+        <div class="player-info">
+            <div class="player-cover">
+                <img id="playerCover" src="https://via.placeholder.com/150" alt="Cover">
+            </div>
+            <div class="player-text">
+                <div class="player-title" id="playerTitle">No song selected</div>
+                <div class="player-artist" id="playerArtist">-</div>
+            </div>
+            <button class="like-btn" id="playerLikeBtn">
+                <i class="far fa-heart"></i>
+            </button>
+        </div>
+
+        <div class="player-controls">
+            <button class="control-btn" id="shuffleBtn">
+                <i class="fas fa-random"></i>
+            </button>
+            <button class="control-btn" id="prevBtn">
+                <i class="fas fa-step-backward"></i>
+            </button>
+            <button class="play-pause-btn" id="playPauseBtn">
+                <i class="fas fa-play"></i>
+            </button>
+            <button class="control-btn" id="nextBtn">
+                <i class="fas fa-step-forward"></i>
+            </button>
+            <button class="control-btn" id="repeatBtn">
+                <i class="fas fa-redo"></i>
+            </button>
+        </div>
+
+        <div class="progress-container">
+            <span class="time" id="currentTime">0:00</span>
+            <div class="progress-bar" id="progressBar">
+                <div class="progress" id="progress">
+                    <div class="progress-handle"></div>
+                </div>
+            </div>
+            <span class="time" id="duration">0:00</span>
+        </div>
+
+        <div class="player-actions">
+            <button class="control-btn" id="queueBtn">
+                <i class="fas fa-list-ol"></i>
+            </button>
+            <div class="volume-container">
+                <i class="fas fa-volume-up" id="volumeIcon"></i>
+                <div class="volume-bar" id="volumeBar">
+                    <div class="volume-progress" id="volumeProgress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="queue-panel" id="queuePanel">
+        <div class="queue-header">
+            <h3>Play Queue</h3>
+            <button class="close-queue" id="closeQueueBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="queue-list" id="queueList"></div>
+    </div>
+
+    <div class="playlist-modal" id="playlistModal">
+        <div class="modal-content">
+            <h3>Create New Playlist</h3>
+            <input type="text" id="playlistNameInput" placeholder="Playlist name">
+            <div class="modal-actions">
+                <button class="btn-cancel" id="cancelPlaylistBtn">Cancel</button>
+                <button class="btn-create" id="createPlaylistBtn">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <audio id="audio"></audio>
+
+    <script src="js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
